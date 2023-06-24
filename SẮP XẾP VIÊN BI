@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define ii pair<int,int>
+string s="0";
+int find(int l , int r , char c){
+	for(int i = l ; i <= r ; i++){
+		if(s[i] == c)return i;
+	}
+	return -1;
+}
+void solve(){
+	int n;
+	cin >> n;
+	int ans = 0;
+	int dx = 0, dt = 0 , dd = 0;
+	for(int i=1 ; i<= n ; i++){
+		char x;
+		cin >> x ;
+		s.push_back(x);
+		if( x == 'X')dx++;
+		else if( x == 'D')dd++;
+		else dt++;
+	}
+	// xxxxtttdd n =9
+	for(int i = 1 ; i<= dx ; i++){
+		if(s[i] == 'X')continue;
+		if(s[i] == 'D'){
+			int idd = find(n-dd +1 , n , 'X');
+			int idt = find(dx +1 , dx+dt , 'X');
+			if(idd != -1)ans ++ , swap(s[i] , s[idd]);
+			else if(idt != -1)ans++ , swap (s[i] , s[idt]);
+		}
+		else {
+			int idd = find(n-dd +1 , n , 'X');
+			int idt = find(dx +1 , dx+dt , 'X');
+			if(idt != -1)ans ++ , swap(s[i] , s[idt]);
+			else if(idd != -1)ans++ , swap (s[i] , s[idd]);
+		}
+	}
+	//
+	for(int i = dx + 1 ; i<= dx + dt ; i++){
+		if(s[i] != 'T')ans++;
+	}
+	cout<<ans<<endl;
+}
+int main(){
+   solve();
+}
